@@ -27,6 +27,7 @@ namespace RazorPagesMovie.Pages.Movies
         public SelectList Genres { get; set; }
         [BindProperty(SupportsGet = true)]
         public string MovieGenre { get; set; }
+
         public async Task OnGetAsync(string movieGenre, string searchString)
         {
             IQueryable<string> genreQuery = from m in _context.Movie
@@ -44,7 +45,7 @@ namespace RazorPagesMovie.Pages.Movies
                 movies = movies.Where(x => x.Genre == MovieGenre);
             }
             Genres = new SelectList(await genreQuery.Distinct().ToListAsync());
-            Movie = await _context.Movie.ToListAsync();
+            Movie = await movies.ToListAsync();
         }
     }
 }
